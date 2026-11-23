@@ -13,6 +13,7 @@ import { openMaterialLab } from './lab';
 import { openTerrainEditor } from './terrainEditor';
 import { makeEncoder } from './video';
 import { modalOpen } from './widgets';
+import { fileStem } from './names';
 
 const store = new Store();
 const stage = document.getElementById('stage') as HTMLCanvasElement;
@@ -139,7 +140,7 @@ const app: App = {
   },
   saveImage() {
     if (mode !== 'render') return say('Render the scene first, then save the image.');
-    stage.toBlob((blob) => blob && download(blob, 'render.png'), 'image/png');
+    stage.toBlob((blob) => blob && download(blob, `${fileStem(store.scene.name)}.png`), 'image/png');
   },
   orbit(dx, dy) {
     const c = cam();
@@ -240,8 +241,28 @@ function invalidate() {
 store.on((c) => {
   if (c !== 'select') invalidate();
   else wireDirty = true;
+  if (c === 'structure') showName();
   ui.sync(c);
 });
+
+// ---------------------------------------------------------------- project name
+const nameEl = document.getElementById('projname')!;
+
+/** Show the project name in the header and window title, shrinking it to fit its column. */
+function showName() {
+  const name = store.scene.name;
+  document.title = `${name} · landscape studio`;
+  nameEl.textContent = name;
+  nameEl.style.fontSize = '';
+  const room = nameEl.parentElement!.clientWidth - 8;
+  const wide = nameEl.scrollWidth;
+  if (room > 0 && wide > room) {
+    const size = parseFloat(getComputedStyle(nameEl).fontSize);
+    nameEl.style.fontSize = `${Math.max(11, (size * room) / wide).toFixed(1)}px`;
+  }
+}
+showName();
+window.addEventListener('resize', showName);
 
 // Hand-edited terrains load a moment after the page does.
 const mapKeys = () => store.scene.objects.map((o) => o.terrain?.map).filter((k): k is string => !!k);
@@ -422,7 +443,7 @@ async function renderMovie() {
     }
     if (movie.cancel) say('Movie cancelled.');
     else {
-      download(await enc.finish(), 'movie.mp4');
+      download(await enc.finish(), `${fileStem(store.scene.name)}.mp4`);
       say('Movie saved as movie.mp4.');
     }
   } catch (e) {

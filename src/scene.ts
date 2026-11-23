@@ -3,6 +3,7 @@ import { Material, preset } from './materials';
 import { Sky, SKY_PRESETS } from './sky';
 import type { TerrainParams } from './terrain';
 import { Anim, autoKey, snapshot, newAnim } from './anim';
+import { projectName } from './names';
 
 export type ObjType = 'plane' | 'sphere' | 'cube' | 'cylinder' | 'cone' | 'terrain' | 'light';
 export type BoolMode = 'neutral' | 'positive' | 'negative' | 'intersect';
@@ -47,6 +48,8 @@ export interface Camera {
 }
 
 export interface Scene {
+  /** The project's name, generated when the scene is created. */
+  name: string;
   objects: SceneObject[];
   sky: Sky;
   camera: Camera;
@@ -103,6 +106,7 @@ export function makeObject(scene: Scene, type: ObjType, kind?: 'water' | LightKi
 
 export function defaultScene(): Scene {
   const scene: Scene = {
+    name: projectName(),
     objects: [],
     sky: { ...structuredClone(SKY_PRESETS[1].sky), sunAz: 285, sunEl: 24, haze: 0.28 },
     camera: { target: [0, 13, 0], yaw: 0.35, pitch: 0.1, dist: 175, fov: 50 },
@@ -139,14 +143,19 @@ export class Store {
 
   constructor() {
     let s: Scene | null = null;
+    let raw: string | null = null;
     try {
-      const raw = localStorage.getItem(KEY);
+      raw = localStorage.getItem(KEY);
       if (raw) s = JSON.parse(raw) as Scene;
     } catch {
       s = null;
     }
     this.scene = s && Array.isArray(s.objects) && s.anim ? s : defaultScene();
+    // Scenes saved before projects had names get one now.
+    if (!this.scene.name) this.scene.name = projectName();
     this.last = JSON.stringify(this.scene);
+    // Save straight away so a new project keeps its name even if it is closed unedited.
+    if (this.last !== raw) this.save();
     this.rebase();
   }
 
