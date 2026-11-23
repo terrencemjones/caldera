@@ -1,13 +1,14 @@
 {
   "name": "caldera",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "package": "npm run build && node scripts/package-windows.mjs"
+    "package": "npm run build && node scripts/package-windows.mjs",
+    "installer": "npm run package && node scripts/build-installer.mjs"
   },
   "devDependencies": {
     "playwright": "^1.65.1",

@@ -16,9 +16,22 @@ A landscape studio that runs in the browser. Build a scene from terrains, water,
 
 ## Download
 
+### Windows app
+
+**[Download Caldera-Setup.cmd](https://github.com/terrencemjones/caldera/releases/latest/download/Caldera-Setup.cmd)** and double-click it.
+
+Caldera installs in a few seconds and opens. After that it behaves like any other Windows app: it is in the Start menu and on the Desktop, runs in its own window, can be pinned to the taskbar, and can be removed from Settings > Apps.
+
+- It needs Google Chrome or Microsoft Edge, which it uses to draw its window. Edge is already part of Windows 10 and 11.
+- It installs for your user account only and does not ask for administrator rights. Everything goes in `%LOCALAPPDATA%\Caldera`.
+- The installer is not code-signed, so your browser may ask you to confirm keeping the file, and Windows may show a "Windows protected your PC" prompt. Choose **More info**, then **Run anyway**.
+- Uninstalling also deletes the scene and terrains saved inside the app.
+
+### Any computer, no install
+
 **[Download Caldera.html](https://github.com/terrencemjones/caldera/releases/latest/download/Caldera.html)**, then double-click it.
 
-That one file is the whole application. It opens in your browser and runs from disk: nothing to install, no server, and no internet connection needed. Use a recent Chrome or Edge for everything, including movie export.
+That one file is the whole application. It opens in your browser and runs from disk: no server and no internet connection needed. Use a recent Chrome or Edge for everything, including movie export.
 
 ## Building from source
 
@@ -37,6 +50,7 @@ Then open the address Vite prints.
 | `npm run build` | Type-check and build into `dist/` |
 | `npm run preview` | Serve the production build |
 | `npm run package` | Build, then pack everything into a single `dist/standalone.html` that runs from disk with no server |
+| `npm run installer` | Package, then build the Windows installer `dist/Caldera-Setup.cmd` |
 
 ## Keyboard shortcuts
 
@@ -68,6 +82,9 @@ Rendering needs WebGL2 with floating-point render targets. Movie export needs th
 | `src/random.ts` | Random scene recipes |
 | `src/ui.ts`, `src/widgets.ts`, `src/wire.ts` | Interface, controls and the wireframe view |
 | `scripts/package-windows.mjs` | Packs the build into one standalone HTML file |
+| `scripts/build-installer.mjs` | Wraps the standalone file, icon and launcher into the Windows installer |
+| `installer/` | The installer and uninstaller scripts, and the launcher that the installer compiles into `Caldera.exe` |
+| `assets/` | The app icon |
 
 ## License
 

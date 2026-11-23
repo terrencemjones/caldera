@@ -15,6 +15,9 @@ html = html.replace(/<script type="module"[^>]*src="([^"]+)"[^>]*><\/script>/g, 
 });
 html = html.replace(/<link rel="modulepreload"[^>]*>/g, '');
 html = html.replace('</body>', () => scripts + '</body>');
+// Give the page its icon, so the app window shows it in the title bar and taskbar.
+const icon = readFileSync(join('assets', 'icon-64.png')).toString('base64');
+html = html.replace('</head>', () => `<link rel="icon" type="image/png" href="data:image/png;base64,${icon}"></head>`);
 const out = process.argv[2] ?? join(dist, 'standalone.html');
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, html);
