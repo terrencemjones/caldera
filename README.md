@@ -1,0 +1,68 @@
+# Caldera
+
+A landscape studio that runs in the browser. Build a scene from terrains, water, primitives and lights, give it a sky and procedural materials, then ray trace it on the GPU as a still image or an animated movie.
+
+## Features
+
+- **Ray-traced rendering** in a WebGL2 fragment shader, refined progressively, with a wireframe view for editing.
+- **Terrains** generated as peaks, hills, mesas or dunes, plus an editor for painting heights (raise, lower, flatten, smooth) and applying filters such as erosion.
+- **Primitives**: plane, sphere, cube, cylinder and cone, with boolean modes (positive, negative, intersect).
+- **Lights**: radial, spot and parallel.
+- **Sky**: sun position, haze, fog and clouds, with presets.
+- **Material lab**: layered procedural textures built from noise sources, filters and colour ramps, optionally limited by altitude and slope.
+- **Animation**: a keyframe timeline, with movies exported as MP4.
+- **Random scenes**: one key generates a complete scene from hand-tuned recipes.
+- **Undo**, and the scene is saved in the browser between sessions.
+
+## Getting started
+
+Requires Node.js and npm.
+
+```sh
+npm install
+npm run dev
+```
+
+Then open the address Vite prints.
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Type-check and build into `dist/` |
+| `npm run preview` | Serve the production build |
+| `npm run package` | Build, then pack everything into a single `dist/standalone.html` that runs from disk with no server |
+
+## Keyboard shortcuts
+
+| Key | Action |
+| --- | --- |
+| `G` | Generate a random scene |
+| `R` | Toggle between render and wireframe |
+| `Space` | Play or stop the animation |
+| `Esc` | Back to wireframe, deselect, or cancel a movie render |
+| `Del` | Delete the selected object |
+| `Ctrl+D` | Duplicate the selected object |
+| `Ctrl+Z` | Undo |
+
+## Browser support
+
+Rendering needs WebGL2 with floating-point render targets. Movie export needs the WebCodecs `VideoEncoder` API. Still images are saved as PNG.
+
+## Project layout
+
+| Path | Contents |
+| --- | --- |
+| `src/main.ts` | Application entry point and frame loop |
+| `src/render/` | The ray tracer: GLSL shaders and the WebGL2 renderer |
+| `src/scene.ts` | Scene model, undo history and persistence |
+| `src/terrain.ts`, `src/terrainOps.ts`, `src/terrainEditor.ts` | Heightmap generation, filters and the terrain editor |
+| `src/materials.ts`, `src/lab.ts` | Procedural materials and the material lab |
+| `src/sky.ts` | Sky model and presets |
+| `src/anim.ts`, `src/timeline.ts`, `src/video.ts` | Keyframes, the timeline and MP4 encoding |
+| `src/random.ts` | Random scene recipes |
+| `src/ui.ts`, `src/widgets.ts`, `src/wire.ts` | Interface, controls and the wireframe view |
+| `scripts/package-windows.mjs` | Packs the build into one standalone HTML file |
+
+## License
+
+[MIT](LICENSE)
