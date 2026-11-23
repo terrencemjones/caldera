@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Untitled landscape studio</title>
+  </head>
+  <body>
+    <div id="app">
+      <header id="top">
+        <div id="brand"><b>untitled</b><span>landscape studio</span></div>
+        <div id="tabs"></div>
+        <div id="palette"></div>
+        <div id="docbtns"></div>
+      </header>
+      <aside id="left">
+        <div class="nano-frame"><canvas id="nano"></canvas></div>
+        <div id="dots"></div>
+        <div id="camctl"></div>
+        <div id="renderctl"></div>
+      </aside>
+      <main id="stagewrap"><canvas id="stage"></canvas></main>
+      <aside id="right"></aside>
+      <div id="timeline"></div>
+      <footer id="status">
+        <span id="statustext"></span>
+        <span class="keys">G random scene · R render · Space play · Esc wireframe · Del delete · Ctrl+D duplicate · Ctrl+Z undo</span>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
