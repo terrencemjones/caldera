@@ -251,7 +251,7 @@ const nameEl = document.getElementById('projname')!;
 /** Show the project name in the header and window title, shrinking it to fit its column. */
 function showName() {
   const name = store.scene.name;
-  document.title = `${name} · landscape studio`;
+  document.title = `${name} · Caldera`;
   nameEl.textContent = name;
   nameEl.style.fontSize = '';
   const room = nameEl.parentElement!.clientWidth - 8;
