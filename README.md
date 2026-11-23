@@ -14,7 +14,13 @@ A landscape studio that runs in the browser. Build a scene from terrains, water,
 - **Random scenes**: one key generates a complete scene from hand-tuned recipes.
 - **Undo**, and the scene is saved in the browser between sessions.
 
-## Getting started
+## Download
+
+**[Download Caldera.html](https://github.com/terrencemjones/caldera/releases/latest/download/Caldera.html)**, then double-click it.
+
+That one file is the whole application. It opens in your browser and runs from disk: nothing to install, no server, and no internet connection needed. Use a recent Chrome or Edge for everything, including movie export.
+
+## Building from source
 
 Requires Node.js and npm.
 
